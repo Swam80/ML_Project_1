@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+	<title>Student Score Predictor</title>
+
+    <style>
+		body {
+			/* /* background-color: #b6e9fb;  */
+            background-image: url("https://i.pinimg.com/564x/2b/b3/ba/2bb3ba0c9dff91a9d3efa923cbfa3240.jpg");
+            background-size: cover;
+		}
+		
+		h1 {
+			color: #333333; /* dark gray color */
+			text-align: center;
+			margin-top: 50px;
+            font-size: 50px;
+            font-style: italic;
+            border: 2px solid #eac947;
+            border-left  :#030303;
+            border-right: #888;
+            border-width: 4px;
+		}
+		
+		form {
+			width: 500px;
+			margin: 0 auto;
+			background-color: #c5bfbf; /* white color */
+			padding: 20px;
+			border-radius: 10px;
+			box-shadow: 0px 0px 10px 0px #CCCCCC; /* light gray color */
+		}
+		
+		form label {
+			display: inline-block;
+			width: 200px;
+			margin-bottom: 10px;
+			color: #333333; /* dark gray color */
+		}
+		
+		form select, form input[type="number"] {
+			width: 200px;
+			height: 30px;
+			margin-bottom: 20px;
+			border-radius: 5px;
+			border: none;
+			padding-left: 10px;
+		}
+		
+		form button[type="submit"] {
+			background-color: #9ef854; /* blue color */
+			color: #0c0c0c; /* white color */
+			border: none;
+			border-radius: 5px;
+			padding: 10px 20px;
+			font-size: 16px;
+			cursor: pointer;
+		}
+		
+		form button[type="submit"]:hover {
+			background-color: #1A5276; /* darker blue color */
+		}
+		
+		.result {
+			width: 500px;
+			margin: 20px auto;
+			padding: 20px;
+			background-color: #FFFFFF; /* white color */
+			border-radius: 10px;
+			box-shadow: 0px 0px 10px 0px #CCCCCC; /* light gray color */
+			text-align: center;
+			color: #333333; /* dark gray color */
+		}
+
+        label {
+                font-weight: bold;
+                color: rgb(47, 47, 116);
+                }
+
+        input, select {
+                outline: 1px solid black;
+                border-color: #030303;
+                
+                }
+
+	</style>
+
+	<script>
+
+	</script>
+
+
+</head>
+		<body>
+		<h1>Student Score Predictor</h1>
+		<form id = 'myForm' method="POST" action= "{{url_for('predict_datapoint')}}" onsubmit="return validateForm()" >
+
+			<label for="gender">Gender:</label>
+			<select id="gender" name="gender" required>
+				<option value="">Select</option>
+				<option value="male">Male</option>
+				<option value="female">Female</option>
+			</select>
+			<br><br>
+			<label for="race_ethnicity">Race/Ethnicity:</label>
+			<select id="race_ethnicity" name="race_ethnicity" required>
+				<option value="">Select</option>
+				<option value="group A">Group A</option>
+				<option value="group B">Group B</option>
+				<option value="group C">Group C</option>
+				<option value="group D">Group D</option>
+				<option value="group E">Group E</option>
+			</select>
+			<br><br>
+			<label for="parental_level_of_education">Parental Level of Education:</label>
+			<select id="parental_level_of_education" name="parental_level_of_education" required>
+				<option value="">Select</option>
+				<option value="bachelor's degree">Bachelor's degree</option>
+				<option value="some college">Some college</option>
+				<option value="master's degree">Master's degree</option>
+				<option value="associate's degree">Associate's degree</option>
+				<option value="high school">High school</option>
+				<option value="some high school">Some high school</option>
+			</select>
+			<br><br>
+			<label for="lunch">Lunch:</label>
+			<select id="lunch" name="lunch" required>
+				<option value="">Select</option>
+				<option value="free/reduced">Free/Reduced</option>
+				<option value="standard">Standard</option>
+			</select>
+			<br><br>
+			<label for="test_preparation_course">Test Preparation Course:</label>
+			<select id="test_preparation_course" name="test_preparation_course" required>
+				<option value="">Select</option>
+				<option value="none">None</option>
+				<option value="completed">Completed</option>
+			</select>
+			<br><br>
+			<label for="reading_score",type= >Reading Score:</label>
+			<input type="number" id="reading_score" name="reading_score" min="0" max="100" required>
+			<br><br>
+			<label for="writing_score">Writing Score:</label>
+			<input type="number" id="writing_score" name="writing_score" min="0" max="100" required>
+			<br><br>
+			
+			<button type="submit" id="submitBtn" onclick="showPrediction(event)">Predict Score</button>
+
+		</form>
+
+			<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+				<div class="modal-dialog" role="document">
+				  <div class="modal-content">
+					<div class="modal-header">
+					  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					  <h4 class="modal-title" id="myModalLabel">Prediction Result</h4>
+					</div>
+					<div class="modal-body">
+					  <p>The prediction is {{result}} </p>
+					</div>
+					<div class="modal-footer">
+					  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
+				  </div>
+				</div>
+			  </div>
+
+			  <script>
+				function validateForm() {
+					const form = document.getElementById("myForm");
+					if (!form.checkValidity()) {
+						alert("Please fill in all fields.");
+						return false;
+					}
+					return true;
+				}
+
+				function showPrediction(event) {
+						event.preventDefault();
+						if (validateForm()) {
+							$.ajax({
+							url: $("#myForm").attr("action"),
+							method: "POST",
+							data: $("#myForm").serialize(),
+							success: function(response) {
+								var result = response;
+								$("#myModalLabel").text("Prediction Result");
+								$("#myModal .modal-body").html("<p>The predicted math score is " + result + "</p>");
+								$("#myModal").modal("show");
+							},
+							error: function(xhr, status, error) {
+								console.log(error);
+							}
+							});
+						}
+						}
+
+
+				
+
+			</script>
+	
+		</body>
+</html>
