@@ -1,0 +1,12 @@
+Model_name,Tuned_Score,Best_Params
+Lasso,0.881444570962113,"{'alpha': 0.05, 'max_iter': 10000}"
+Ridge,0.8804480338276082,"{'alpha': 0.1, 'max_iter': 10000}"
+Linear Regression,0.8803737785720934,{}
+SVR,0.8797904451802474,"{'C': 100, 'gamma': 'scale', 'kernel': 'linear'}"
+Gradient Boosting,0.874262873077305,"{'learning_rate': 0.1, 'loss': 'squared_error', 'n_estimators': 64, 'subsample': 0.75}"
+XGBRegressor,0.8628772402712002,"{'learning_rate': 0.05, 'n_estimators': 128}"
+CatBoosting Regressor,0.8566301224032382,"{'depth': 6, 'iterations': 100, 'learning_rate': 0.1}"
+Random Forest,0.8532170050105153,"{'criterion': 'absolute_error', 'max_features': None, 'n_estimators': 256}"
+AdaBoost Regressor,0.8526766016525336,"{'learning_rate': 0.5, 'loss': 'exponential', 'n_estimators': 256}"
+Decision Tree,0.8242299188020519,"{'ccp_alpha': 0.01, 'criterion': 'friedman_mse', 'max_depth': 5}"
+KNN,0.552082922382986,{'n_neighbors': 20}
