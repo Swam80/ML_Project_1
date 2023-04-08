@@ -19,7 +19,7 @@ from src.utils import save_object
 ##  TO GIVE INPUT TO DATA_TRANS CLASS AHEAD, CREATED A PATH TO SAVE THE MODEL AS PICKEL FILE.
 @dataclass
 class DataTransformationConfig :
-    preprocessor_obj_path = os.path.join('artifact','preprocesso.pkl')
+    preprocessor_obj_path = os.path.join('artifact','preprocessor.pkl')
 
 class DataTransformation:
     def __init__(self):
