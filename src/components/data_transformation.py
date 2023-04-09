@@ -38,14 +38,6 @@ class DataTransformation:
 
             num_features = dataset.select_dtypes(exclude="object").columns.tolist()
             cat_features = dataset.select_dtypes(include="object").columns.tolist()
-            # num_features = ["writing_score", "reading_score"]
-            # cat_features = [
-            #     "gender",
-            #     "race_ethnicity",
-            #     "parental_level_of_education",
-            #     "lunch",
-            #     "test_preparation_course",
-            # ]
 
 
 

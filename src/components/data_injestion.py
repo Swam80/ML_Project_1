@@ -31,6 +31,7 @@ class DataInjestion:
 
         try:
             df = pd.read_csv('notebook/data/stud.csv')
+            
             logging.info("Read the dataset as DataFrame")
 
            
@@ -58,12 +59,12 @@ class DataInjestion:
         except Exception as e:
             raise CustomException(e,sys)
 
-if __name__ =='__main__' :
-    obj = DataInjestion()
-    train_path,test_path = obj.initiate_injestion()
+# if __name__ =='__main__' :
+#     obj = DataInjestion()
+#     train_path,test_path = obj.initiate_injestion()
 
-    data_transformation = DataTransformation()
-    train_arr,test_arr,_= data_transformation.initiate_data_transformation(train_path,test_path)
+#     data_transformation = DataTransformation()
+#     train_arr,test_arr,_= data_transformation.initiate_data_transformation(train_path,test_path)
 
-    model_trainer = ModelTrainer()
-    print(model_trainer.initiate_model_trainer(train_arr,test_arr))
+#     model_trainer = ModelTrainer()
+#     print(model_trainer.initiate_model_trainer(train_arr,test_arr))
